@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ShoppingCart, Search } from "lucide-react";
 import { PRODUCTS, CATEGORIES } from "@/lib/mockData";
 import ProductCard from "@/components/ProductCard";
+import ProductCarousel from "@/components/ProductCarousel";
 import BottomNav from "@/components/BottomNav";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -59,9 +60,9 @@ export default function StorePage() {
       </div>
 
       {/* Products */}
-      <div className="flex-1 overflow-y-auto px-5">
+      <div className="flex-1 overflow-y-auto">
         {query ? (
-          <div>
+          <div className="px-5">
             <p className="text-xs text-[#555] mb-3">
               {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &quot;{query}&quot;
             </p>
@@ -72,22 +73,18 @@ export default function StorePage() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-6">
             {CATEGORIES.map((cat) => {
               const items = PRODUCTS.filter((p) => p.category === cat);
               return (
                 <div key={cat}>
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center justify-between px-5 mb-3">
                     <h3 className="text-sm font-bold text-white">{cat}</h3>
                     <span className="text-xs text-[#444]">
                       {items.length} items
                     </span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {items.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
+                  <ProductCarousel products={items} />
                 </div>
               );
             })}
