@@ -36,6 +36,7 @@ export interface AppState {
   updateCartQty: (id: string, delta: number) => void;
   clearCart: () => void;
   applyLoan: (approved: boolean) => void;
+  resetStore: () => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -97,6 +98,22 @@ export const useAppStore = create<AppState>()(
       clearCart: () => set({ cart: [] }),
 
       applyLoan: (approved) => set({ loanApproved: approved }),
+
+      resetStore: () =>
+        set({
+          balance: 1000,
+          transactions: [
+            {
+              id: "init-1",
+              title: "Welcome Bonus",
+              amount: 1000,
+              type: "credit",
+              date: new Date().toISOString(),
+            },
+          ],
+          cart: [],
+          loanApproved: false,
+        }),
     }),
     {
       name: "storio-bank-storage",

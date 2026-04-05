@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Settings, TrendingUp, ArrowRight } from "lucide-react";
+import { TrendingUp, ArrowRight } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { formatCurrency } from "@/lib/utils";
 import TransactionItem from "@/components/TransactionItem";
 import BottomNav from "@/components/BottomNav";
+import SettingsDropdown from "@/components/SettingsDropdown";
 
 export default function HomePage() {
   const router = useRouter();
@@ -21,9 +21,7 @@ export default function HomePage() {
           <p className="text-[#666] text-sm">Welcome back,</p>
           <h1 className="text-xl font-bold text-white">User</h1>
         </div>
-        <button className="w-10 h-10 rounded-full bg-[#111] border border-[#222] flex items-center justify-center">
-          <Settings size={18} className="text-[#666]" />
-        </button>
+        <SettingsDropdown />
       </div>
 
       {/* Balance Card */}

@@ -31,12 +31,15 @@ Single Zustand store with `persist` middleware. Shape:
 - `transactions: Transaction[]` — ordered newest-first; added via `addTransaction()`
 - `cart: CartItem[]` — includes `emoji` field for display; mutated via `addToCart()`, `updateCartQty()`, `removeFromCart()`, `clearCart()`
 - `loanApproved: boolean` — set by `applyLoan()`
+- `resetStore()` — resets all state to defaults (balance `1000`, seeded welcome transaction, empty cart). Used by logout; call this before redirecting to `/login`.
 
 `updateBalance(amount)` is additive (pass negative to deduct). Always pair a balance update with `addTransaction()` so the UI stays consistent.
 
 ### Routing
 
 App Router pages, all static. Auth pages (`/login`, `/register`, `/forgot-password`) have no bottom nav. All other pages (`/home`, `/loan`, `/loan/offer`, `/loan/denied`, `/store`, `/cart`) render `<BottomNav />` manually at the bottom of each page component.
+
+**Logout** is handled by `components/SettingsDropdown.tsx` (rendered on `/home`). It calls `resetStore()` then `router.push("/login")`. Outside-click detection uses `useRef` + a `mousedown` listener scoped to when the dropdown is open — follow this same pattern for any future dismissible overlays.
 
 **Loan approval logic** (in `/loan/page.tsx`): `housing === "Own" && income > 60000` → `/loan/offer`, otherwise → `/loan/denied`.
 
